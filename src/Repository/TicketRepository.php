@@ -59,6 +59,22 @@ class TicketRepository
         return $stmt->fetch();  
     }
 
-    // get all tickets avec 
+    // get all tickets assigned to a user
+    public function getTicketsAssignedToUser($userId)
+    {
+        $stmt = $this->pdo->prepare("SELECT t.* FROM tickets t JOIN ticket_user tu ON t.id = tu.ticket_id WHERE tu.user_id = :user_id");
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchAll();
+    }
+
+    // assign a ticket to a user
+    public function assignTicketToUser($ticketId, $userId)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO ticket_user (ticket_id, user_id) VALUES (:ticket_id, :user_id)");
+        return $stmt->execute([
+            'ticket_id' => $ticketId,
+            'user_id' => $userId
+        ]);
+    }
 
 }
