@@ -18,19 +18,38 @@ class User
         return $model->getUserById($id);
     }
 
-    public static function create()
+    public static function create($username, $email, $password)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$username || !$email || !$password) {
+            $username = $_POST['username'] ?? null;
+            $email = $_POST['email'] ?? null;
+            $password = $_POST['password'] ?? null;
         }
 
         $model = new UserModel();
         $ok = $model->addUser(
-            $_POST['username'] ?? null,
-            $_POST['email'] ?? null,
-            $_POST['password'] ?? null
+            $username,
+            $email,
+            $password
         );
 
         return ['ok' => (bool) $ok];
+    }
+
+    public function login($email, $password)
+    {
+        if (!$email || !$password) {
+            $email = $_POST['email'] ?? null;
+            $password = $_POST['password'] ?? null;
+        }
+
+        $model = new UserModel();
+        $user = $model->getUserByEmail($email);
+
+        if ($user && password_verify($password, $user['password'])) {
+            return ['ok' => true, 'user' => $user];
+        } else {
+            return ['ok' => false, 'message' => 'Invalid email or password'];
+        }
     }
 }

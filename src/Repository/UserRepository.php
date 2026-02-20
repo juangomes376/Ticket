@@ -33,13 +33,14 @@ class UserRepository
         return $stmt->fetch();
     }
 
-    public function createUser($username, $email, $password)
+    public function createUser($username, $email, $password, $role)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
+        $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password, role_id) VALUES (:username, :email, :password, :role)");
         return $stmt->execute([
             'username' => $username,
             'email' => $email,
-            'password' => $password
+            'password' => $password,
+            'role' => $role
         ]);
     }
 

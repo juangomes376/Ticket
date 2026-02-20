@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Models;
-
-define('PASSWORD_DEFAULT', '2y');
+namespace App\Model;
 
 use App\Core\Database;
 use App\Repository\UserRepository;
@@ -38,9 +36,10 @@ class UserModel
     {
 
         $password = password_hash($password, PASSWORD_DEFAULT);
+        $role = 1;
 
         $pdo = Database::getInstance()->pdo;
-        $ok = (new UserRepository($pdo))->createUser($username, $email, $password);
+        $ok = (new UserRepository($pdo))->createUser($username, $email, $password, $role);
 
         return $ok;
     }
