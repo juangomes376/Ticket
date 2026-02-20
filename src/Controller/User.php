@@ -2,39 +2,35 @@
 
 namespace App\Controllers;
 
-use App\Core\Repository;
-use App\Core\Database;
-use App\Repository\UserRepository;
+use App\Models\UserModel;
 
 class User
 {
-   
-    public function __construct()
-    {
-
-    }
-
-    // get tout les utilisateurs
     public static function all()
     {
-            $pdo = Database::getInstance()->pdo;
-            $AllUsers = (new UserRepository($pdo))->getAllUsers();
-
-        $html = '
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Document</title>
-        </head>
-        <body>
-            '.var_dump($AllUsers).'
-        </body>
-        </html>
-        ';
-
-        return $html;
+        $model = new UserModel();
+        return $model->getAllUsers();
     }
 
+    public static function show($id)
+    {
+        $model = new UserModel();
+        return $model->getUserById($id);
+    }
+
+    public static function create()
+    {
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            return ['ok' => false, 'error' => 'POST required'];
+        }
+
+        $model = new UserModel();
+        $ok = $model->addUser(
+            $_POST['username'] ?? null,
+            $_POST['email'] ?? null,
+            $_POST['password'] ?? null
+        );
+
+        return ['ok' => (bool) $ok];
+    }
 }
