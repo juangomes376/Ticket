@@ -6,80 +6,43 @@ use App\Models\CommentModel;
 
 class Comment
 {
-    public static function allByTicket()
+    public static function allByTicket($ticketId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
-            return ['ok' => false, 'error' => 'GET required'];
+        if (!$ticketId ) {
+            $ticketId = $_GET['ticket_id'] ?? null;
         }
 
-        $ticketId = $_GET['ticket_id'] ?? null;
-
-        $model = new CommentModel();
-        return $model->allByTicket($ticketId);
+        return (new CommentModel())->allByTicket($ticketId);
     }
 
-    public static function create()
+    public static function create($ticketId, $userId, $content)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId && !$userId && !$content) {
+            $ticketId = $_GET['ticket_id'] ?? null;
+            $userId = $_GET['user_id'] ?? null;
+            $content = $_GET['content'] ?? null;
         }
 
-        $ticketId = $_POST['ticket_id'] ?? null;
-        $userId   = $_POST['user_id'] ?? null;
-        $content  = $_POST['content'] ?? null;
-
-        $model = new CommentModel();
-        return $model->create($ticketId, $userId, $content);
+        return (new CommentModel())->create($ticketId, $userId, $content);
     }
 
-    public static function update()
+    public static function update($commentId, $content)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$commentId && !$content) {
+            $commentId = $_POST['comment_id'] ?? null;
+            $content   = $_POST['content'] ?? null;
         }
 
-        $commentId = $_POST['comment_id'] ?? null;
-        $content   = $_POST['content'] ?? null;
-
-        $model = new CommentModel();
-        return $model->update($commentId, $content);
+        return (new CommentModel())->update($commentId, $content);
     }
 
-    public static function delete()
+    public static function delete($commentId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$commentId) {
+            $commentId = $_POST['comment_id'] ?? null;
         }
 
-        $commentId = $_POST['comment_id'] ?? null;
-
-        $model = new CommentModel();
-        return $model->delete($commentId);
+        return (new CommentModel())->delete($commentId);
     }
 
-    public static function assignToUser($ticketId)
-    {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
-        }
-
-        if (!isset($_SESSION)) session_start();
-        $currentUserId = $_SESSION['user']['id'] ?? null;
-
-        if (!$currentUserId) {
-            return ['ok' => false, 'error' => 'Unauthorized'];
-        }
-
-        $pdo = \App\Core\Database::getInstance()->pdo;
-        $role = (new \App\Repository\UserRepository($pdo))->getUserRoleLabel($currentUserId);
-
-        if ($role !== 'manager') {
-            return ['ok' => false, 'error' => 'Forbidden'];
-        }
-
-        $devId = $_POST['user_id'] ?? null;
-
-        $model = new \App\Models\TicketModel();
-        return $model->assignToUser($ticketId, $devId);
-    }
 }
