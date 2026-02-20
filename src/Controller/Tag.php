@@ -2,32 +2,19 @@
 
 namespace App\Controllers;
 
-use App\Core\Database;
-use App\Repository\TagRepository;
+use App\Models\TagModel;
 
 class Tag
 {
-    public function __construct() {}
-
-    public static function allByTicket($ticketId)
+    public static function allByTicket()
     {
-        $pdo = Database::getInstance()->pdo;
-        $allTags = (new TagRepository($pdo))->getTagsByTicketId($ticketId);
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            return ['ok' => false, 'error' => 'POST required'];
+        }
 
-        $html = '
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Tags</title>
-        </head>
-        <body>
-            ' . var_dump($allTags) . '
-        </body>
-        </html>
-        ';
+        $ticketId = $_POST['ticket_id'] ?? null;
 
-        return $html;
+        $model = new TagModel();
+        return $model->allByTicket($ticketId);
     }
 }
