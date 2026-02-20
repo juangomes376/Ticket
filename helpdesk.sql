@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS ticket_tags;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS tickets;
+DROP TABLE IF EXISTS ticket_tags;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
 
@@ -51,6 +52,16 @@ CREATE TABLE tickets (
   CONSTRAINT fk_tickets_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE ticket_tags (
+  ticket_id INT UNSIGNED NOT NULL,
+  tag_id INT UNSIGNED NOT NULL,
+  assigned_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (ticket_id, tag_id),
+  KEY idx_ticket_tags_tag (tag_id),
+  CONSTRAINT fk_tt_ticket FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE,
+  CONSTRAINT fk_tt_tag FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE tags (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   label VARCHAR(50) NOT NULL,
@@ -61,6 +72,7 @@ CREATE TABLE tags (
 CREATE TABLE ticket_tags (
   ticket_id INT UNSIGNED NOT NULL,
   tag_id INT UNSIGNED NOT NULL,
+  assigned_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (ticket_id, tag_id),
   KEY idx_ticket_tags_tag (tag_id),
   CONSTRAINT fk_tt_ticket FOREIGN KEY (ticket_id) REFERENCES tickets(id) ON DELETE CASCADE,
