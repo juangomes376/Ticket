@@ -77,4 +77,21 @@ class TicketRepository
         ]);
     }
 
+    public function addTagOnTicket($tagId, $ticketId)
+    {
+        $stmt = $this->pdo->prepare("INSERT INTO ticket_tag (ticket_id, tag_id) VALUES (:ticket_id, :tag_id)");
+        return $stmt->execute([
+            'ticket_id' => $ticketId,
+            'tag_id' => $tagId
+        ]);
+    }
+
+    public function deleteTagOnTicket($tagId, $ticketId)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM ticket_tag WHERE ticket_id = :ticket_id AND tag_id = :tag_id");
+        return $stmt->execute([
+            'ticket_id' => $ticketId,
+            'tag_id' => $tagId
+        ]);
+    }
 }
