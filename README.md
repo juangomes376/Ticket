@@ -56,5 +56,5 @@ php -S localhost:8000 -t public
 ## Contribuer
 Les contributions sont bienvenues : ouvrez une issue ou une pull request avec une description claire des changements.
 
-## ⚠️ Licence
-Aucune licence fournie — ajoutez un fichier `LICENSE` si nécessaire.
+## ✅ Licence
+Le projet est distribué sous licence **MIT** — voir le fichier `LICENSE` à la racine du dépôt. Remplacez `\[Votre nom\]` dans `LICENSE` pour indiquer le titulaire si nécessaire.
