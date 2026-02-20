@@ -3,6 +3,9 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\User;
+use App\Controllers\Comment;
+use App\Controllers\Tag;
+use App\Controllers\Ticket;
 use App\Core\Router;
 
 

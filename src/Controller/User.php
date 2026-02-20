@@ -9,7 +9,7 @@ use App\Repository\UserRepository;
 class User
 {
    
-    public function __construct(public string $name, public string $email)
+    public function __construct()
     {
 
     }
