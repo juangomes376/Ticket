@@ -22,5 +22,7 @@ $router->get('/contact', function() {
     echo "Salut vous etes sur la page de contact !";
 });
 
+$router->get('/ticket/{ticket_id}/', [Ticket::class, 'show']);
+
 
 $router->resolve();

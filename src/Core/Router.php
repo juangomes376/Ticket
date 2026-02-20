@@ -28,10 +28,12 @@ class Router {
 
             if (preg_match($pattern, $path, $matches)) {
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                // apenas valores, não nomes, para evitar parâmetros nomeados
+                $args = array_values($params);
                 
                 // 1. Se for uma função anônima (Closure)
                 if (is_callable($callback)) {
-                    return call_user_func_array($callback, $params);
+                    return call_user_func_array($callback, $args);
                 }
 
                 // 2. Se for um array ['Classe', 'Metodo']
@@ -44,7 +46,7 @@ class Router {
                     if (class_exists($className)) {
                         $controller = new $className();
                         if (method_exists($controller, $methodName)) {
-                            return call_user_func_array([$controller, $methodName], $params);
+                            return call_user_func_array([$controller, $methodName], $args);
                         }
                         die("Erro: Método $methodName não encontrado na classe $className");
                     }

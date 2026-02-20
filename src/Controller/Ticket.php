@@ -6,92 +6,90 @@ use App\Models\TicketModel;
 
 class Ticket
 {
-    private static function post(string $key, $default = null)
-    {
-        return $_POST[$key] ?? $default;
-    }
 
     public static function show($ticketId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
-            return ['ok' => false, 'error' => 'GET required'];
+        if(!$ticketId){
+            $ticketId = $_GET['ticket_id'] ?? null;
         }
 
-        return TicketModel::show($ticketId);
+        $html = var_dump((new TicketModel())->show($ticketId));
+        return $html;
+
     }
 
-    public static function allByUser()
+    public static function allByUser($userId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if(!$userId){
+            $userId = $_GET['user_id'] ?? null;
         }
 
-        return TicketModel::allByUser(self::post('user_id'));
+
+        return (new TicketModel())->allByUser($userId);
     }
 
-    public static function create()
+    public static function create($title, $description, $status, $priority, $userId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if(!$title && !$description && !$status && !$priority && !$userId){
+            $title = $_GET['title'] ?? null;
+            $description = $_GET['description'] ?? null;
+            $status = $_GET['status'] ?? null;
+            $priority = $_GET['priority'] ?? null;
+            $userId = $_GET['user_id'] ?? null;
         }
 
-        return TicketModel::create(
-            self::post('title'),
-            self::post('description'),
-            self::post('status'),
-            self::post('priority'),
-            self::post('user_id')
-        );
+        return (new TicketModel())->create($title, $description, $status, $priority, $userId);
     }
 
-    public static function update($ticketId)
+    public static function update( $title, $description, $status, $priority, $userId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if(!$title && !$description && !$status && !$priority && !$userId){
+            $title = $_GET['ticket_id'] ?? null;
+            $description = $_GET['description'] ?? null;
+            $status = $_GET['status'] ?? null;
+            $priority = $_GET['priority'] ?? null;
+            $userId = $_GET['user_id'] ?? null;
         }
 
-        return TicketModel::update(
-            $ticketId,
-            self::post('title'),
-            self::post('description'),
-            self::post('status'),
-            self::post('priority')
-        );
+        return (new TicketModel())->update($title, $description, $status, $priority, $userId);
     }
 
     public static function delete($ticketId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId) {
+            $ticketId = $_GET['ticket_id'] ?? null;
         }
 
-        return TicketModel::delete($ticketId);
+        return (new TicketModel())->delete($ticketId);
     }
 
-    public static function assignToUser($ticketId)
+    public static function assignToUser($ticketId, $userId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId && !$userId) {
+            $ticketId = $_GET['ticket_id'] ?? null;
+            $userId = $_GET['user_id'] ?? null;
         }
 
-        return TicketModel::assignToUser($ticketId, self::post('user_id'));
+        return (new TicketModel())->assignToUser($ticketId, $userId);
     }
 
-    public static function addTag($ticketId)
+    public static function addTag($ticketId, $tagId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId && !$tagId) {
+            $ticketId = $_GET['ticket_id'] ?? null;
+            $tagId = $_GET['tag_id'] ?? null;
         }
 
-        return TicketModel::addTag($ticketId, self::post('label'));
+        return (new TicketModel())->addTag($ticketId, $tagId);
     }
 
-    public static function deleteTag($ticketId)
+    public static function deleteTag($ticketId, $tagId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId && !$tagId) {
+            $ticketId = $_GET['ticket_id'] ?? null;
+            $tagId = $_GET['tag_id'] ?? null;
         }
 
-        return TicketModel::deleteTag($ticketId, self::post('tag_id'));
+        return (new TicketModel())->deleteTag($ticketId, $tagId);
     }
 }
