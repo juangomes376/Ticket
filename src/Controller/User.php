@@ -43,10 +43,13 @@ class User
             $password = $_POST['password'] ?? null;
         }
 
-        $model = new UserModel();
-        $user = $model->getUserByEmail($email);
+        $user = (new UserModel())->getUserByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
+            // save identifier(s) in session for later requests
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            session_regenerate_id(true);
             return ['ok' => true, 'user' => $user];
         } else {
             return ['ok' => false, 'message' => 'Invalid email or password'];

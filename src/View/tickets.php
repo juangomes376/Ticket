@@ -5,6 +5,9 @@
     <!-- Dashboard Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
         <div>
+            <?php if (!empty($_SESSION['username'])): ?>
+                <p class="text-slate-400 mb-1">Connecté en tant que <?php echo htmlspecialchars($_SESSION['username']); ?></p>
+            <?php endif; ?>
             <h1 class="text-4xl font-black tracking-tighter mb-2">
                 <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">Mes
                     Tickets</span>
