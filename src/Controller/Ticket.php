@@ -11,7 +11,6 @@ class Ticket
         return $_POST[$key] ?? $default;
     }
 
-    // ✅ SHOW = GET
     public static function show($ticketId)
     {
         if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
@@ -21,7 +20,6 @@ class Ticket
         return TicketModel::show($ticketId);
     }
 
-    // ✅ ALLBYUSER = POST (comme tu veux)
     public static function allByUser()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -31,7 +29,6 @@ class Ticket
         return TicketModel::allByUser(self::post('user_id'));
     }
 
-    // ✅ RESTE = POST
     public static function create()
     {
         if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
