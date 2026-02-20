@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controller;
 
-use App\Models\TagModel;
+use App\Model\TagModel;
 
 class Tag
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controller;
 
-use App\Models\TicketModel;
+use App\Model\TicketModel;
 
 class Ticket
 {

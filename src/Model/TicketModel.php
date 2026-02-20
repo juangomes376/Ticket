@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
 use App\Core\Database;
 use App\Repository\TicketRepository;
-
 class TicketModel
 {
     public function AllbyUser($userId)
@@ -63,4 +62,5 @@ class TicketModel
         $ok = (new TicketRepository($pdo))->deleteTagOnTicket($tagId, $ticketId);
         return $ok;
     }
+    
 }

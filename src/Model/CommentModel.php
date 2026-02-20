@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
 use App\Core\Database;
 use App\Repository\CommentRepository;
@@ -34,7 +34,5 @@ class CommentModel
         $ok = (new CommentRepository($pdo))->deleteComment($commentId);
         return $ok;
     }
-
-    
 
 }

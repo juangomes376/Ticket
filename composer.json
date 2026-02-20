@@ -3,10 +3,7 @@
   "description": "PSR-4 autoload para projeto PHP puro",
   "autoload": {
     "psr-4": {
-      "App\\Controllers\\": "src/Controller/",
-      "App\\Core\\": "src/Core/",
-      "App\\Models\\": "src/Model/",
-      "App\\Repository\\": "src/Repository/"
+      "App\\": "src/"
     }
   },
   "require": {}

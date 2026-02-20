@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controller;
 
-use App\Models\CommentModel;
+use App\Model\CommentModel;
 
 class Comment
 {
