@@ -6,53 +6,40 @@ use App\Models\TagModel;
 
 class Tag
 {
-    public static function allByTicket()
+    public static function allByTicket($ticketId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
-            return ['ok' => false, 'error' => 'GET required'];
+        if (!$ticketId ) {
+            $ticketId = $_GET['ticket_id'] ?? null;
         }
-
-        $ticketId = $_GET['ticket_id'] ?? null;
-
-        $model = new TagModel();
-        return $model->allByTicket($ticketId);
+        return (new TagModel())->allByTicket($ticketId);
     }
 
-    public static function create()
+    public static function create($ticketId, $label)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$ticketId && !$label) {
+            $ticketId = $_GET['ticket_id'] ?? null;
+            $label = $_GET['label'] ?? null;
         }
 
-        $ticketId = $_POST['ticket_id'] ?? null;
-        $label    = $_POST['label'] ?? null;
-
-        $model = new TagModel();
-        return $model->create($ticketId, $label);
+        return (new TagModel())->create($ticketId, $label);
     }
 
-    public static function update()
+    public static function update($tagId, $label)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$tagId && !$label) {
+            $tagId = $_GET['tag_id'] ?? null;
+            $label = $_GET['label'] ?? null;
         }
 
-        $tagId = $_POST['tag_id'] ?? null;
-        $label = $_POST['label'] ?? null;
-
-        $model = new TagModel();
-        return $model->update($tagId, $label);
+        return (new TagModel())->update($tagId, $label);
     }
 
-    public static function delete()
+    public static function delete($tagId)
     {
-        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-            return ['ok' => false, 'error' => 'POST required'];
+        if (!$tagId) {
+            $tagId = $_GET['tag_id'] ?? null;
         }
 
-        $tagId = $_POST['tag_id'] ?? null;
-
-        $model = new TagModel();
-        return $model->delete($tagId);
+        return (new TagModel())->delete($tagId);
     }
 }

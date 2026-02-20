@@ -48,4 +48,13 @@ class TagRepository
         ]);
     }
 
+    public function updateTag($tagId, $label)
+    {
+        $stmt = $this->pdo->prepare("UPDATE tags SET label = :label WHERE id = :id");
+        return $stmt->execute([
+            'label' => $label,
+            'id' => $tagId
+        ]);
+    }
+
 }
