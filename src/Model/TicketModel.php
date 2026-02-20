@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Models;
+
 use App\Core\Database;
 use App\Repository\TicketRepository;
+
 class TicketModel
 {
     public function AllbyUser($userId)

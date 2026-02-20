@@ -1,6 +1,9 @@
 <?php
+
 namespace App\Models;
+
 define('PASSWORD_DEFAULT', '2y');
+
 use App\Core\Database;
 use App\Repository\UserRepository;
 
@@ -10,7 +13,7 @@ class UserModel
     public function getAllUsers()
     {
         $pdo = Database::getInstance()->pdo;
-        $AllUsers = (new UserRepository($pdo))->getAllUsers();  
+        $AllUsers = (new UserRepository($pdo))->getAllUsers();
         return $AllUsers;
     }
 
@@ -41,6 +44,4 @@ class UserModel
 
         return $ok;
     }
-
-
 }
