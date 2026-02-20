@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Core\Repository;
+use App\Core\Database;
+use App\Repository\UserRepository;
 
 class User
 {
@@ -15,11 +17,8 @@ class User
     // get tout les utilisateurs
     public static function all()
     {
-        // global $conexion;
-        // $requete = $conexion->prepare("SELECT * FROM users;");
-        // $requete->execute();
-        // $AllUsers = $requete->fetchAll();
-            $AllUsers = (new \App\Repository\UserRepository(\App\Core\Database::getInstance()->pdo))->getAllUsers();
+            $pdo = Database::getInstance()->pdo;
+            $AllUsers = (new UserRepository($pdo))->getAllUsers();
 
         $html = '
         <!DOCTYPE html>
