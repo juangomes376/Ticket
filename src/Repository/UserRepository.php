@@ -39,7 +39,7 @@ class UserRepository
         return $stmt->execute([
             'username' => $username,
             'email' => $email,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
+            'password' => $password
         ]);
     }
 
@@ -48,13 +48,5 @@ class UserRepository
         $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
-
-    public function verifyPassword($email, $password)
-    {
-        $user = $this->getUserByEmail($email);
-        if ($user) {
-            return password_verify($password, $user['password']);
-        }
-        return false;
-    }
+    
 }
