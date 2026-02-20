@@ -17,20 +17,27 @@ class TicketModel
     {
         $pdo = Database::getInstance()->pdo;
         $ticket = (new TicketRepository($pdo))->getTicketById($ticketId);
+
+        if ($ticket) {
+            $ticket['comments'] = (new \App\Repository\CommentRepository($pdo))->getCommentsByTicketId($ticketId);
+        }
+
         return $ticket;
     }
 
     public function create($title, $description, $status, $priority, $userId)
     {
         $pdo = Database::getInstance()->pdo;
-        $ok = (new TicketRepository($pdo))->createTicket($title, $description, $status, $priority, $userId);
+        // TicketRepository::createTicket expects 4 params: title, description, status, userId
+        $ok = (new TicketRepository($pdo))->createTicket($title, $description, $status, $userId);
         return $ok;
     }
 
     public function update($ticketId, $title, $description, $status, $priority)
     {
         $pdo = Database::getInstance()->pdo;
-        $ok = (new TicketRepository($pdo))->updateTicket($ticketId, $title, $description, $status, $priority);
+        // TicketRepository::updateTicket expects 4 params: ticketId, title, description, status
+        $ok = (new TicketRepository($pdo))->updateTicket($ticketId, $title, $description, $status);
         return $ok;
     }
 
@@ -62,5 +69,5 @@ class TicketModel
         $ok = (new TicketRepository($pdo))->deleteTagOnTicket($tagId, $ticketId);
         return $ok;
     }
-    
+
 }

@@ -13,9 +13,7 @@ class Ticket
             $ticketId = $_GET['ticket_id'] ?? null;
         }
 
-        $html = var_dump((new TicketModel())->show($ticketId));
-        return $html;
-
+        return (new TicketModel())->show($ticketId);
     }
 
     public static function allByUser($userId)
