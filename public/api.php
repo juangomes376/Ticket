@@ -13,14 +13,21 @@ $router->post('/contact', function () {
 });
 
 $router->post('/tickets/create', function () {
-    Ticket::create(
+    $result = Ticket::create(
         $_POST['title'] ?? null,
         $_POST['description'] ?? null,
         $_POST['status'] ?? null,
-        null,
-        $_POST['user_id'] ?? null
+        $_POST['priority'] ?? null,
+        $_SESSION['user_id'] ?? null
     );
-    header('Location: /tickets');
+
+    if ($result) {
+        error_log("Ticket created successfully with ID: " . $result);
+        header('Location: /tickets');
+    } else {
+        error_log("Failed to create ticket title: " . ($_POST['title'] ?? 'null') . ", description: " . ($_POST['description'] ?? 'null') . ", status: " . ($_POST['status'] ?? 'null') . ", priority: " . ($_POST['priority'] ?? 'null') . ", userId: " . ($_SESSION['user_id'] ?? 'null'));
+        header('Location: /tickets/create');
+    }
 });
 
 $router->post('/tags/create', function () {

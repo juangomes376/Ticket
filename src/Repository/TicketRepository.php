@@ -13,15 +13,24 @@ class TicketRepository
     }
 
     // Create a new ticket
-    public function createTicket($title, $description, $status, $userId)
+    public function createTicket($title, $description, $status, $priority, $userId)
     {
-        $stmt = $this->pdo->prepare("INSERT INTO tickets (title, description, status, user_id) VALUES (:title, :description, :status, :user_id)");
-        return $stmt->execute([
+        $stmt = $this->pdo->prepare("INSERT INTO tickets (title, description, status, priority, user_id) VALUES (:title, :description, :status, :priority, :user_id)");
+        $stmt->execute([
             'title' => $title,
             'description' => $description,
             'status' => $status,
+            'priority' => $priority,
             'user_id' => $userId
         ]);
+
+        if ($stmt->rowCount() > 0) {
+            error_log("Ticket created successfully with ID: " . $this->pdo->lastInsertId());
+            return $this->pdo->lastInsertId();
+        } else {
+            error_log("Failed to create ticket: " . implode(", ", $stmt->errorInfo()));
+            return false;
+        }
     }
 
     // modify a ticket

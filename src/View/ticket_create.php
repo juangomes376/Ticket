@@ -44,7 +44,8 @@
                         <div class="space-y-2">
                             <label for="status"
                                 class="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Statut
-                                Initial</label>
+                                Initial
+                            </label>
                             <div class="relative group">
                                 <select name="status" id="status"
                                     class="w-full px-6 py-4 bg-slate-900/50 border border-slate-800 rounded-2xl focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-white appearance-none cursor-pointer">
@@ -63,12 +64,28 @@
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label for="user_id"
-                                class="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">ID
-                                Utilisateur</label>
-                            <input type="number" name="user_id" id="user_id" value="1"
-                                class="w-full px-6 py-4 bg-slate-900/50 border border-slate-800 rounded-2xl text-slate-400 group-hover:text-white transition-all cursor-not-allowed"
-                                readonly>
+                            <label for="priority"
+                                class="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Priorité
+                                Initiale
+                            </label>
+                            <div class="relative group">
+                                <select name="priority" id="priority"
+                                    class="w-full px-6 py-4 bg-slate-900/50 border border-slate-800 rounded-2xl focus:outline-none focus:border-purple-500/50 focus:ring-4 focus:ring-purple-500/10 transition-all text-white appearance-none cursor-pointer">
+                                    <option value="low">Low</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-500">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

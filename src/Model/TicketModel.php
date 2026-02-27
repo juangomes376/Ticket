@@ -28,8 +28,8 @@ class TicketModel
     public function create($title, $description, $status, $priority, $userId)
     {
         $pdo = Database::getInstance()->pdo;
-        // TicketRepository::createTicket expects 4 params: title, description, status, userId
-        $ok = (new TicketRepository($pdo))->createTicket($title, $description, $status, $userId);
+        // TicketRepository::createTicket expects 5 params: title, description, status, priority, userId
+        $ok = (new TicketRepository($pdo))->createTicket($title, $description, $status, $priority, $userId);
         return $ok;
     }
 

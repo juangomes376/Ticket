@@ -32,11 +32,11 @@ $router->get('/tickets', function () {
 });
 
 $router->get('/tickets/create', function () {
-    $userId = $_SESSION['user_id'] ?? null;
-    if (!$userId) {
-        header('Location: /login');
-        exit;
-    }
+    // $userId = $_SESSION['user_id'] ?? null;
+    // if (!$userId) {
+    //     header('Location: /login');
+    //     exit;
+    // }
     echo (new InterfaceView())->view('ticket_create', 'Créer un ticket');
 });
 

@@ -28,15 +28,15 @@ class Ticket
 
     public static function create($title, $description, $status, $priority, $userId)
     {
-        if(!$title && !$description && !$status && !$priority && !$userId){
-            $title = $_GET['title'] ?? null;
-            $description = $_GET['description'] ?? null;
-            $status = $_GET['status'] ?? null;
-            $priority = $_GET['priority'] ?? null;
-            $userId = $_GET['user_id'] ?? null;
+        if($title && $description && $status && $priority && $userId){
+            error_log("Creating ticket with title: $title, description: $description, status: $status, priority: $priority, userId: $userId");
+            return (new TicketModel())->create($title, $description, $status, $priority, $userId);
+        }else{
+            error_log("Failed to create ticket: Missing required parameters");
+            return false;
         }
 
-        return (new TicketModel())->create($title, $description, $status, $priority, $userId);
+        
     }
 
     public static function update( $title, $description, $status, $priority, $userId)
