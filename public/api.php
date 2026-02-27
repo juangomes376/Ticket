@@ -35,9 +35,6 @@ $router->post('/login', function () {
         $_POST['password'] ?? null
     );
 
-    error_log('login result: '.print_r($result,true));
-    error_log('session now: '.print_r($_SESSION,true));
-
     if ($result['ok'] == true) {
         header('Location: /tickets');
     } else {
@@ -46,7 +43,7 @@ $router->post('/login', function () {
 });
 
 $router->post('/register', function () {
-    User::create(
+    $result = (new User())->create(
         $_POST['username'] ?? null,
         $_POST['email'] ?? null,
         $_POST['password'] ?? null
