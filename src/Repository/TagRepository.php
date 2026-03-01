@@ -57,4 +57,10 @@ class TagRepository
         ]);
     }
 
+    public function getAllTags()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM tags");
+        return $stmt->fetchAll();
+    }
+
 }

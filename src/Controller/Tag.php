@@ -42,4 +42,9 @@ class Tag
 
         return (new TagModel())->delete($tagId);
     }
+
+    public static function getalltags()
+    {
+        return (new TagModel())->getalltags();
+    }
 }

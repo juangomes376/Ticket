@@ -6,6 +6,27 @@ class InterfaceView
 {
     public static function header()
     {
+        $_SESSION['user_id'] = $_SESSION['user_id'] ?? null;
+        if ($_SESSION['user_id']) {
+            // menu de user conectado: perfil e logout
+            $login = '
+                <div class="relative group inline-block">
+                    <button class="px-5 py-2.5 rounded-full text-sm font-bold glass border-white/10 text-white hover:bg-slate-700 transition-all">
+                        ' . $_SESSION['username'] . '
+                    </button>       
+                    <div class="absolute right-0 mt-2 w-40 glass border-white/10 text-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="/profile" class="block px-4 py-2 hover:bg-slate-700">Perfil</a>
+                        <a href="/logout" class="block px-4 py-2 hover:bg-slate-700">Sair</a>
+                    </div>
+                </div>
+            ';
+        } else {
+            $login = '<a href="/login" class="px-5 py-2.5 rounded-full text-sm font-bold glass border-white/10 text-white hover:bg-slate-700 transition-all">Connexion</a>';
+        }
+
+
+
+
         $html = '
         <body class="bg-slate-950 text-slate-100 antialiased selection:bg-purple-500/30">
             <header class="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
@@ -18,8 +39,8 @@ class InterfaceView
                         <a href="/" class="nav-link text-sm font-medium text-slate-400 hover:text-white">Accueil</a>
                         <a href="/features" class="nav-link text-sm font-medium text-slate-400 hover:text-white">Features</a>
                         <a href="/tickets" class="nav-link text-sm font-medium text-slate-400 hover:text-white">Tickets</a>
-                        <a href="/login" class="px-5 py-2.5 rounded-full text-sm font-bold bg-white text-slate-950 hover:bg-slate-200 transition-all">Connexion</a>
-                    </div>
+                        '.$login.'
+                    </div>          
                     <!-- Menu Mobile (simplifié pour l\'exemple) -->
                     <button class="md:hidden text-slate-400 hover:text-white">
                          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
@@ -108,7 +129,7 @@ class InterfaceView
                         </div>
                     </div>
                     <div class=\"mt-8 pt-8 border-t border-slate-900 text-center text-slate-600 text-xs\">
-                        &copy; " . date('Y') . " TicketPro SaaS. Conçu avec excellence.
+                        &copy; " . date('Y') . " TicketPro SaaS. Conçu avec <exce></exce>llence.
                     </div>
                 </div>
             </footer>

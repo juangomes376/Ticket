@@ -49,6 +49,7 @@ class User
             // save identifier(s) in session for later requests
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['droits'] = $user['droits'];
             session_regenerate_id(true);
             return ['ok' => true, 'user' => $user];
         } else {

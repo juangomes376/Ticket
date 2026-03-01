@@ -51,6 +51,12 @@ $router->get('/ticket/{ticket_id}/', function ($ticketId) {
 });
 
 $router->get('/login', function () {
+    $userId = $_SESSION['user_id'] ?? null;
+    if ($userId) {
+        header('Location: /tickets');
+        exit;
+    }
+
     echo (new InterfaceView())->view('login', 'Connexion');
 });
 

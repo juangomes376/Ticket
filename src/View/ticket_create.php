@@ -1,5 +1,7 @@
 <?php
+use App\Controller\Tag;
 // Formulaire de création de ticket - TicketPro SaaS Redesign
+$tags = Tag::getalltags();
 ?>
 <main class="container mx-auto px-6 py-12 max-w-4xl">
     <!-- Header -->
@@ -85,6 +87,25 @@
                                             clip-rule="evenodd" />
                                     </svg>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-1 gap-6">
+                        <div class="space-y-2">
+                            <label for="status"
+                                class="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Tags
+                            </label>
+                            <!-- input for tags, avec checkbox pour chaque tag existant, et possibilité d'ajouter un nouveau tag -->
+                            <div class="relative group">
+                                <div class="flex flex-wrap gap-2">
+                                    <?php foreach($tags as $tag) { ?>
+                                        <label class="flex items-center space-x-2">
+                                            <input type="checkbox" name="tags[]" value="<?= $tag['id'] ?>" class="form-checkbox text-purple-500">
+                                            <span class="text-sm text-slate-400"><?= ucfirst($tag['label']) ?></span>
+                                        </label>
+                                    <?php } ?>
+                                </div>
+
                             </div>
                         </div>
                     </div>

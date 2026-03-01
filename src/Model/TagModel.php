@@ -35,4 +35,11 @@ class TagModel
         return $ok;
     }
 
+    public function getalltags()
+    {
+        $pdo = Database::getInstance()->pdo;
+        $tags = (new TagRepository($pdo))->getAllTags();
+        return $tags;
+    }
+
 }

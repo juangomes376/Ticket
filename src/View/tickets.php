@@ -1,5 +1,8 @@
 <?php
-// Liste des tickets - TicketPro SaaS Redesign
+
+
+
+
 ?>
 <main class="container mx-auto px-6 py-12">
     <!-- Dashboard Header -->
@@ -33,11 +36,11 @@
         </div>
         <div class="glass p-6 rounded-3xl border-purple-500/20">
             <p class="text-purple-400 text-xs font-bold uppercase tracking-wider mb-1">En cours</p>
-            <p class="text-3xl font-black text-white">--</p>
+            <p class="text-3xl font-black text-white"><?php echo $encour; ?></p>
         </div>
         <div class="glass p-6 rounded-3xl border-pink-500/20">
             <p class="text-pink-400 text-xs font-bold uppercase tracking-wider mb-1">Terminés</p>
-            <p class="text-3xl font-black text-white">--</p>
+            <p class="text-3xl font-black text-white"><?php echo $termine; ?></p>
         </div>
     </div>
 
@@ -46,16 +49,16 @@
         <?php if (empty($tickets)): ?>
             <div class="glass p-12 rounded-3xl text-center border-dashed border-white/10">
                 <p class="text-slate-500 text-lg">Aucun ticket trouvé pour le moment.</p>
-                <a href="/tickets/create" class="text-purple-400 font-bold hover:underline mt-2 inline-block">Commencez par
-                    en créer um.</a>
+                <a href="/tickets/create" class="text-purple-400 font-bold hover:underline mt-2 inline-block">Commencez par en créer un.</a>
             </div>
         <?php else: ?>
             <div
                 class="hidden md:grid grid-cols-12 gap-4 px-8 mb-4 text-xs font-bold uppercase tracking-widest text-slate-600">
                 <div class="col-span-1">ID</div>
-                <div class="col-span-7">Titre du Ticket</div>
+                <div class="col-span-6">Titre du Ticket</div>
+                <div class="col-span-2">Priorité</div>
                 <div class="col-span-2">Statut</div>
-                <div class="col-span-2 text-right">Action</div>
+                <!-- <div class="col-span-2 text-right">Action</div> -->
             </div>
 
             <?php foreach ($tickets as $t): ?>
@@ -63,10 +66,28 @@
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
                         <div class="col-span-1 text-slate-500 font-mono text-sm">#<?php echo htmlspecialchars($t['id']); ?>
                         </div>
-                        <div class="col-span-7">
+                        <div class="col-span-6">
                             <h3 class="font-bold text-lg text-white group-hover:text-purple-400 transition-colors">
                                 <?php echo htmlspecialchars($t['title']); ?>
                             </h3>
+                        </div>
+                        <div class="col-span-2">
+                            <?php
+                            $priority = strtolower($t['priority']);
+                            $priorityLine = 'bg-slate-800 text-slate-400';
+                            if ($priority === 'low')
+                                $priorityLine = 'bg-green-500/10 text-green-400 border border-green-500/20';
+                            if ($priority === 'normal')
+                                $priorityLine = 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+                            if ($priority === 'high')
+                                $priorityLine = 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20';
+                            if ($priority === 'urgent')
+                                $priorityLine = 'bg-red-500/10 text-red-400 border border-red-500/20';
+                            ?>
+                            <span
+                                class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-tighter <?php echo $priorityLine; ?>">
+                                <?php echo htmlspecialchars($t['priority']); ?>
+                            </span>
                         </div>
                         <div class="col-span-2">
                             <?php
@@ -84,7 +105,7 @@
                                 <?php echo htmlspecialchars($t['status']); ?>
                             </span>
                         </div>
-                        <div class="col-span-2 text-right">
+                        <!-- <div class="col-span-2 text-right">
                             <a href="/ticket/<?php echo urlencode($t['id']); ?>"
                                 class="inline-flex items-center space-x-2 text-sm font-bold text-slate-300 hover:text-white transition-colors">
                                 <span>Détails</span>
@@ -94,7 +115,7 @@
                                         clip-rule="evenodd" />
                                 </svg>
                             </a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             <?php endforeach; ?>

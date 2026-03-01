@@ -8,7 +8,6 @@ use App\Controller\Ticket;
 use App\Controller\InterfaceView;
 
 $router->post('/contact', function () {
-
     echo (new InterfaceView())->view('contact', 'Contact');
 });
 
@@ -22,17 +21,19 @@ $router->post('/tickets/create', function () {
     );
 
     if ($result) {
-        error_log("Ticket created successfully with ID: " . $result);
         header('Location: /tickets');
     } else {
-        error_log("Failed to create ticket title: " . ($_POST['title'] ?? 'null') . ", description: " . ($_POST['description'] ?? 'null') . ", status: " . ($_POST['status'] ?? 'null') . ", priority: " . ($_POST['priority'] ?? 'null') . ", userId: " . ($_SESSION['user_id'] ?? 'null'));
         header('Location: /tickets/create');
     }
 });
 
 $router->post('/tags/create', function () {
-    Tag::create($_POST['ticket_id'] ?? null, $_POST['label'] ?? null);
-    header('Location: /tickets');
+    $result = Tag::create($_POST['ticket_id'] ?? null, $_POST['label'] ?? null);
+    if ($result) {
+        header('Location: /tickets');
+    } else {
+        header('Location: /tickets/create');
+    }
 });
 
 // authentication actions
